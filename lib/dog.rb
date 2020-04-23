@@ -4,7 +4,7 @@ class Dog
  
   
   def initialize(attributes)
-    
+    attributes.each do
     
   end
   
