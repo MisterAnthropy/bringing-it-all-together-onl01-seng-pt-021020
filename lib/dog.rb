@@ -30,17 +30,14 @@ def save
     sql = <<-SQL
       INSERT INTO dogs (name, breed) VALUES (?, ?)
       SQL
-
     DB[:conn].execute(sql, self.name, self.breed)
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
-
     self
   end
 
   def self.create(hash_of_attributes)
       dog = self.new(hash_of_attributes)
       dog.save
-
       dog
   end
 
@@ -48,7 +45,6 @@ def save
     sql = <<-SQL
       SELECT * FROM dogs WHERE id = ?
     SQL
-
     DB[:conn].execute(sql, id).map do |row|
       self.new_from_db(row)
     end.first
@@ -68,10 +64,7 @@ def save
       SELECT * FROM dogs
       WHERE name = ? AND breed = ?
       SQL
-
-
       dog = DB[:conn].execute(sql, name, breed).first
-
       if dog
         new_dog = self.new_from_db(dog)
       else
@@ -84,7 +77,6 @@ def save
     sql = <<-SQL
       SELECT * FROM dogs WHERE name = ?
     SQL
-
     DB[:conn].execute(sql, name).map do |row|
       self.new_from_db(row)
     end.first
@@ -94,11 +86,7 @@ def save
     sql = <<-SQL
       UPDATE dogs SET name = ?, breed = ? WHERE id = ?
       SQL
-
       DB[:conn].execute(sql, self.name, self.breed, self.id)
   end
 
-
-  
-  
 end
